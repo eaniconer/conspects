@@ -44,4 +44,5 @@ Note 2: `*` stands for all possible numbers
 
 #### References
 1. [Scheduling Tasks with Cron Jobs](https://code.tutsplus.com/tutorials/scheduling-tasks-with-cron-jobs--net-8800)
+2. [The Beginners Guide To Cron Jobs](https://www.ostechnix.com/a-beginners-guide-to-cron-jobs/)
 
