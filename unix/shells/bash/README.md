@@ -166,7 +166,73 @@ $ echo $?
 ```
 
 ## Quoting characters
-...
+
+`VAR=10`
+
+1. `echo \$VAR` prints `$VAR`
+2. Single quotes: `echo '$VAR'` prints `$VAR`
+3. Double quotes:
+    - `echo "$VAR"` -> `10`
+    - ```echo "`date`"```
+
+## Shell expansion
+
+### Brace expansion
+
+```
+$ echo ab{1,2,3}cd
+ab1cd ab2cd ab3cd
+```
+
+```
+$ echo ab{1,2}c{3,4}d
+ab1c3d ab1c4d ab2c3d ab2c4d
+```
+
+### Tilde expansion
+
+word: `~[tilde-prefix]/[anything]/[anything]/...`
+
+_Note: tilde-prefix doesn't contain backslashes_
+
+ - If none of character in `tilde-prefix` are quoted, the prefix is treated as login name.
+ - If login name is null string, tilde replaced with `HOME`
+ - ... (see docs)
+
+
+### Shell parameter and variable expansion
+
+ - `"${PARAM}"` - the value of `PARAM` will be substituted
+ - indirect expansion
+
+    ```
+    $ val1 = 10
+    $ val2 = val1
+    $ echo "${!val2}"
+    10
+    ```
+
+ - creating named variable `echo "${VAR:=100}"`
+
+
+### Command substitution
+
+_replace `command` with its result_
+
+`$(command)`
+
+or with backticks:
+
+```
+`command`
+```
+
+### Arithmetic expansion
+
+`$(( EXPRESSION ))` or `$[ EXPRESSION ]`
+
+
+
 
 
 
