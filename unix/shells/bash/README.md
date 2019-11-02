@@ -303,8 +303,25 @@ b c
 
 ```
 
-Note: _to get the option list: `shopt`_
+Note: _to get the option list_: `shopt` or `set -o`
 
+
+## Aliases
+
+_Show aliases_:
+
+```bash
+$ alias
+```
+
+```bash
+$ alias say_hello='echo Hello'
+$ say_hello
+Hello
+$ unalias say_hello
+$ say_hello
+-bash: say_hello: command not found
+```
 
 
 
