@@ -177,30 +177,69 @@ $ echo $?
 
 ## Shell expansion
 
-### Brace expansion
+There are 8 types of expansion perormed. In the next sections they are described in the order they are expanded.
 
-```
+### 1. Brace expansion
+
+```bash
 $ echo ab{1,2,3}cd
 ab1cd ab2cd ab3cd
 ```
 
-```
+```bash
 $ echo ab{1,2}c{3,4}d
 ab1c3d ab1c4d ab2c3d ab2c4d
 ```
 
-### Tilde expansion
+```bash
+$ echo {1..3}
+1 2 3
+```
+
+```bash
+$ echo {a..d}
+a b c d
+```
+
+A well-formed brace expansion consist of unquoted opening and closing braces, and at least one unquoted comma.
+
+
+### 2. Tilde expansion
 
 word: `~[tilde-prefix]/[anything]/[anything]/...`
 
 _Note: tilde-prefix doesn't contain backslashes_
 
  - If none of character in `tilde-prefix` are quoted, the prefix is treated as login name.
- - If login name is null string, tilde replaced with `HOME`
- - ... (see docs)
+ - If login name is null string, tilde replaced with `HOME`.  If 'HOME' is unset, then it replaced with home directory of the user executing the shell.
 
+ ```bash
+$ echo ~+/abc  # echo $PWD/abc
+$ echo ~-/abc  # echo $OLDPWD/abc
+```
 
-### Shell parameter and variable expansion
+###### directory stack
+
+```bash
+tmp$ mkdir -p a/b/c
+tmp$ pushd a
+~/tmp/a ~/tmp
+a$ pushd b
+~/tmp/a/b ~/tmp/a ~/tmp
+b$ pushd c
+~/tmp/a/b/c ~/tmp/a/b ~/tmp/a ~/tmp
+
+c$ echo ~+0  # == echo ~0
+~/tmp/a/b/c  # the first in the stack (we can see order using `dirs`)
+
+c$ echo ~-0
+~/tmp  # the last in the stack
+
+c$ echo ~+1
+~/tmp/a/b  # the second in the stack
+```
+
+### 3. Shell parameter and variable expansion
 
  - `"${PARAM}"` - the value of `PARAM` will be substituted
  - indirect expansion
@@ -215,7 +254,7 @@ _Note: tilde-prefix doesn't contain backslashes_
  - creating named variable `echo "${VAR:=100}"`
 
 
-### Command substitution
+### 4. Command substitution
 
 _replace `command` with its result_
 
@@ -227,9 +266,47 @@ or with backticks:
 `command`
 ```
 
-### Arithmetic expansion
+### 5. Arithmetic expansion
 
 `$(( EXPRESSION ))` or `$[ EXPRESSION ]`
+
+`[BASE#]N` - usage of arithmetic base:
+
+```bash
+echo $(( 2#11 ))  # base 2, output: 3
+echo $(( 3#11 ))  # base 3, output: 4
+```
+
+### 6. Process substitution
+
+### 7. Process substitution
+
+### 8. File name expansion
+
+It works, unless the `-f` option has been set (`set -f`). Bash scans each word for the characters `*`, `?`, `[` and if one of them found, then the word is regarded as PATTERN.
+
+```bash
+tmp$ touch a.txt
+tmp$ set -o noglob  # `set -f`
+tmp$ echo *
+*
+tmp$ set +o noglob  # `set +f`
+tmp$ echo *
+a.txt
+
+tmp$ export GLOBIGNORE="b.*:a*"  # colon-separated list
+tmp$ ls
+a.txt	b	b.exe	c
+tmp$ echo *  # all file names that match to at least one of pattern in GLOBIGNORE
+             # will be skipped
+b c
+
+```
+
+Note: _to get the option list: `shopt`_
+
+
+
 
 
 
