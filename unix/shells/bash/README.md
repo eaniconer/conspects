@@ -448,6 +448,116 @@ $ sed 's/$/END/' a.txt  # insert `END` at the end of each line
 $ sed -e 's/x1/y1/g' -e 's/XX/YY/g' a.txt
 ```
 
+# The GNU awk
+
+_The basic function of awk is to search files for lines or other text units containing one or more patterns. When
+a line matches one of the patterns, special actions are performed on that line._
+
+How to run:
+
+- awk PROGRAM inputfile(s)
+- awk -f PROGRAM-FILE inputfile(s)
+
+### Print selected fields
+
+```bash
+$ ls -l | awk '{ print $4 $5 }'  # without space
+$ ls -l | awk '{ print $4, $5 }'  # with space
+```
+
+### Formatting fields
+
+```bash
+ls -lh | grep -v total | awk '{ print "Size: " $6 " bytes for " $10 }'
+```
+
+### Regular expression
+
+Syntax: `awk 'EXPRESSION {PROGRAM}' file(s)`
+
+```bash
+$ cat codes.in
+abc-900-X
+bcd-930-X
+abc-900-Y
+$ cat codes.in | awk '/900/ { print $1 }'
+abc-900-X
+abc-900-Y
+
+# BEGIN & END
+cat codes.in | awk 'BEGIN { print "[" } /900/ { print $1 } END { print "]" }'
+[
+abc-900-X
+abc-900-Y
+]
+```
+
+### Input field separator
+
+_represented built-in variable FS_
+
+```bash
+$ echo "AB:BC CD" | awk 'BEGIN { FS=":" } { print $1 "-" $2 }'
+AB-BC CD
+```
+
+### Output separators
+
+```bash
+$ echo "a b c" | awk '{ print $3 $2 $1 }'  # no separators
+cba
+
+$ echo "a b c" | awk '{ print $3, $2, $1 }'  # default separator
+c b a
+
+$ echo "a b c" | awk 'BEGIN {OFS=";"} { print $3, $2, $1 }'
+c;b;a
+```
+
+#### Output record separator
+
+```bash
+$ cat file
+a b c
+d e f
+$ awk 'BEGIN {ORS="\n------\n"} { print $3, $2, $1 }' file
+c b a
+------
+f e d
+------
+```
+
+### Number of records
+
+```bash
+$ cat file
+ab
+ab
+ab
+$ awk '{ print NR }' file  # NR is built-in
+1
+2
+3
+```
+
+### User-defined variables
+
+```bash
+$ cat file
+1
+2
+3
+4
+5
+
+$ awk '{total += $1} { print $1 " added " } END { print "TOTAL: " total }' file
+1 added
+2 added
+3 added
+4 added
+5 added
+TOTAL: 15
+```
 
 
 
