@@ -386,19 +386,67 @@ $ ls -d a[[:digit:]]
 a1	a2	a3
 ```
 
+# The GNU sed stream editor
 
+_sed - Stream EDitor_
 
+## Interactive editing
 
+### Printing lines containing the a pattern
 
+```bash
+$ sed -n '/hello/p' file.txt  # print all lines with substring `hello`
+# `/p` - command Print
+# without -n sed print entire file, but matched lines printed twice
+```
 
+With pattern
 
+```bash
+$ sed -n '/^h.*o$/p' file.txt
+```
 
+### Deleting lines
 
+```bash
+$ sed -n '/hello/d' file.txt
+# `/d` stands for delete-command
+```
 
+### Range of lines
 
+```bash
 
+$ sed -n '2,4p' a.txt  # print lines 2,3,4
+$ sed '2,4d' a.txt  # delete lines 2,3,4
+$ sed '4,$d' a.txt  # print only first 3 lines
 
+bash$ cat a.txt
+a1
+a2
+a3
+a4
+a5
+a6
+bash$
+bash$ sed -n '/a2/,/a4/p' a.txt
+a2
+a3
+a4
+```
 
+### Find and replace
+
+```bash
+$ sed 's/a1/a11/' a.txt  # replace only first occurrence in the line
+$ sed 's/a1/a11/g' a.txt  # examine entire line
+
+$ sed 's/^/> /' a.txt  # insert `> ` at the beginning of each line
+$ sed 's/$/END/' a.txt  # insert `END` at the end of each line
+
+# mutliple find and replace with -e option
+$ sed -e 's/x1/y1/g' -e 's/XX/YY/g' a.txt
+```
 
 
 
