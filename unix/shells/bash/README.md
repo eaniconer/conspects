@@ -323,6 +323,76 @@ $ say_hello
 -bash: say_hello: command not found
 ```
 
+# Regular Expression
+
+#### Line and word anchors. `grep`
+
+```bash
+$ grep ^abc file.txt  # lines starting with `abc`
+
+$ grep abc$ file.txt  # lines ending with `abc`
+
+$ grep [wx] file.txt  # lines contain either `w` or `x`
+
+$ grep '\<g...t\>' file.txt  # five-character words starting with `g` and ending with `t`
+
+$ grep '\<g.*t\>' file.txt
+
+# Asterisk
+$ grep '*' file.txt  # lines with asterisk
+
+$ ls
+a.txt	b.txt
+tmp$ cat b.txt
+a.txt
+a.txt
+tmp$ grep -n *  # asterisk expands to `a.txt b.txt`
+1:a.txt
+2:a.txt
+
+```
+
+### Character ranges
+
+```bash
+$ mkdir {a..z}1
+$ ls -d [a-cx-z]1
+a1	b1	c1	x1	y1	z1
+```
+
+Exclusion
+
+```bash
+$ mkdir a{1..4}
+$ ls -d a[!3-4]  # any characters are not enclosed will be matched
+a1	a2
+$ ls -d a[^1-2]
+a3	a4
+```
+
+### Character classes
+
+Classes: `alnum`, `alpha`, `ascii`, `blank`, `cntrl`, `digit`, `graph`, `lower`, `print`, `punct`, `space`, `upper`, `word`, `xdigit`
+
+Syntax: `[:CLASS:]`
+
+Example:
+
+```bash
+$ mkdir a{1..3} a{b..d}
+$ ls
+a1	a2	a3	ab	ac	ad
+$ ls -d a[[:digit:]]
+a1	a2	a3
+```
+
+
+
+
+
+
+
+
 
 
 
