@@ -1,0 +1,24 @@
+
+println "configuration phase - 1"
+
+task configured {
+    println "configuration phase - 2"
+}
+
+task task1 {
+    doLast {
+        println "execution phase - 1"
+    }
+}
+
+task task2 {
+    doFirst {
+        println "execution phase - 2"
+    }
+
+    doLast {
+        println "execution phase - 3"
+    }
+
+    println "configuration phase - 3"
+}
