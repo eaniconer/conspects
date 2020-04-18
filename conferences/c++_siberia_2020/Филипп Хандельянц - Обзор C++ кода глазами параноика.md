@@ -159,7 +159,7 @@ void foo()
 
 ##### How to fix
 
- * custom `safe_memset` + disabled LTO/WPO (свой memset в отдельной еденице трансляции, если не отключить LTO/WPO, то компилятор может опять его отбросить)
+ * custom `safe_memset` + disabled LTO/WPO (свой memset в отдельной единице трансляции, если не отключить LTO/WPO, то компилятор может опять его отбросить)
  * Volatile assembly code (может работать не везде)
  * Memset + memory barrier (не всегда работает)
  * `-fno-builtin-memset`, тогда все memset'ы не будут оптимизироваться
