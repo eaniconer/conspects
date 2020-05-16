@@ -1,0 +1,43 @@
+Download on your PC
+1) SFML GCC 6.1.0 MinGW (SEH) - 64-bit (https://www.sfml-dev.org/download/sfml/2.4.2/ )
+2) MinGW Builds 6.1.0 (64-bit) (https://sourceforge.net/projects/mingw-w64/files/Toolchains%20targetting%20Win64/Personal%20Builds/mingw-builds/6.1.0/threads-posix/seh/x86_64-6.1.0-release-posix-seh-rt_v5-rev0.7z/download )
+Be careful with versions.
+
+Unpack archive with mingw to disk C. As a result we have directory with mingw: C:\mingw64
+Add to PATH of environment variables the path C:/mingw64/bin
+Unpack archive with smlf to get C:\SFML-2.4.2
+
+Create File C:/SFML-2.4.2/main.cpp and put in it following code:
+///////////////////////////////////////start of code///////////////////////////////////////
+#include <SFML/Graphics.hpp>
+int main()
+{
+    sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+    sf::CircleShape shape(100.f);
+    shape.setFillColor(sf::Color::Green);
+
+    while (window.isOpen())
+    {
+        sf::Event event;
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed)
+                window.close();
+        }
+
+        window.clear();
+        window.draw(shape);
+        window.display();
+    }
+
+    return 0;
+}
+////////////////////////////////////end of code/////////////////////////////////////////////////
+
+Open command prompt in directory C:\SFML-2.4.2
+
+C:\SFML-2.4.2> g++ -DSFML_STATIC -std=c++11 -Wall -I include -c main.cpp -o main.o
+C:\SFML-2.4.2> g++ -DSFML_STATIC main.o -o main.exe -L lib -lsfml-graphics-s -lsfml-window-s -lsfml-system-s -lopengl32 -lwinmm -lgdi32 -ljpeg
+C:\SFML-2.4.2> main.exe
+
+You will see a window with a green circle.
