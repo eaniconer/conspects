@@ -1,7 +1,7 @@
 
 ## Cron [_(wiki)_](https://en.wikipedia.org/wiki/Cron)
 
-used to schedule jobs(command/scripts) to run periodically.
+*used to schedule jobs(command/scripts) to run periodically.*
 
 #### Usage example
 
