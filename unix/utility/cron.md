@@ -8,7 +8,7 @@ used to schedule jobs(command/scripts) to run periodically.
 Task: append `Hello` to file.txt once a minute
 
 1. `crontab -e`  # opens editor to describe jobs
-2. `* * * * * echo >> file.txt`  # job description
+2. `* * * * * echo Hello >> file.txt`  # job description
 
 3. `crontab -r`  # removes all jobs
 
