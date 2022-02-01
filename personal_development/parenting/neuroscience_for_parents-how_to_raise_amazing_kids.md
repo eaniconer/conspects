@@ -25,6 +25,12 @@
 
 - Научить ребенка справляться с буллингом и давлением сверстников
 
+### Aux
+
+See here: https://ericalayne.co/wp-content/uploads/2013/06/marital-happiness-chart.jpg
+
+Дети - это не мини-взрослые и мы не должны обращаться с ними, как с таковыми
+
 ## Chapter 1. The Reptilian Brain
 
 ### The Reptilian Brain
